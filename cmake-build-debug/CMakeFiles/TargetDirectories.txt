@@ -1,0 +1,5 @@
+/Users/adnan/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/ChessGame.dir
+/Users/adnan/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/ChessGameTests.dir
+/Users/adnan/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/test.dir
+/Users/adnan/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/adnan/CLionProjects/ChessGame/cmake-build-debug/CMakeFiles/rebuild_cache.dir
