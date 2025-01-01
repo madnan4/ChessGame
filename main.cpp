@@ -29,10 +29,15 @@ void create_Board(Chessboard& chessboard)
     for (int i = 0; i < 8; i++) {
         chessboard.place(i, 6, Black, Pawn);
     }
-    // chessboard.place(4, 7, Black, King);
-    // chessboard.place(5, 1, White, Rook);
-    // chessboard.place(0, 6, Color::White, Piece::Pawn);
-    // chessboard.place(6, 5, White, Knight);
+
+    //check stalemate
+    // chessboard.place(0, 6, Black, King);
+    // chessboard.place(2, 5, White, Bishop);
+    // chessboard.place(0, 0, Color::White, Piece::Rook);
+    // chessboard.place(0, 4, Color::White, Piece::Pawn);
+    // chessboard.place(2, 6, Color::Black, Piece::Pawn);
+    // chessboard.place(7, 7, White, Rook);
+    // chessboard.place(1, 0, White, Rook);
 }
 string promote() {
     while (true) {
@@ -55,10 +60,11 @@ string promote() {
 void play_game()
 {
     bool checkMate = false;
+    bool staleMate = false;
     Chessboard chessboard;
     create_Board(chessboard);
     chessboard.print();
-    while(!checkMate)
+    while(!checkMate && !staleMate)
     {
         chessboard.getPlayer();
         string command = "";
@@ -83,6 +89,7 @@ void play_game()
         }
         tokens.clear();
         checkMate = chessboard.isCheckmate();
+        staleMate = chessboard.isStaleMate();
         chessboard.print();
     }
 }

@@ -76,13 +76,14 @@ public:
     Color attackColor;
     Chessboard();
     bool isCheckmate();
+    bool isStaleMate();
     void createBoard();
     void print();
     int place(int x, int y, Color c, Piece p);
     int get(int x, int y, Color &c, Piece &p);
     int move(int fromX, int fromY, int toX, int toY);
     void promotePawnFunc(int toX, int toY, string input);
-    void getPlayer() const{cout << "It is "<<currentPlayer << " piece's turn"<< endl;};
+    void getPlayer() const{if (currentPlayer == White){cout << "It is White piece's turn"<< endl;} else{cout << "It is Black piece's turn"<< endl;}};
     ChessboardIterator begin();
     ChessboardIterator end();
 };

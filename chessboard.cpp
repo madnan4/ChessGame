@@ -88,7 +88,7 @@ void Chessboard::print() {
 //                toPrint = "\n" + toPrint;
             }
 
-            toPrint = to_string(k) + " "+ add + toPrint;
+            toPrint = to_string(k) + " "+ add + " " + to_string(k) + toPrint;
             k++;
             add = ""; // clear add string after adding it to toPrint
             i = 0; // reset the counter
@@ -648,7 +648,7 @@ bool Chessboard::isCheckmate() {
                             // If the king is no longer in check, it's not checkmate
                             if (!stillInCheck)
                                 {
-                                cout <<"checking every position "<< toY << ", " << toX << ", " << piece << std::endl;
+                                // cout <<"checking every position "<< toY << ", " << toX << ", " << piece << std::endl;
                                 return false;
                             }
                         }
@@ -690,4 +690,25 @@ void Chessboard::performCastling(int fromX, int fromY, int toX, int toY) {
         if (fromY == 0) { rookHasMoved[1][0] = true;}
         if (fromY == 7) { rookHasMoved[1][1] = true;}
     }
+}
+
+bool Chessboard::isStaleMate() {
+    for (int y = 0; y < 8; ++y) {
+        for (int x = 0; x < 8; ++x) {
+            if (board[y][x].getOccupied() && board[y][x].getColor() == currentPlayer) {
+                // cout << "Stale mate is " << board[y][x].getName() << endl;
+
+                for (int toY = 0; toY < 8; ++toY) {
+                    for (int toX = 0; toX < 8; ++toX) {
+                        if (isValidMove(x, y, toX, toY)) {
+                            // cout << x << y << toX << toY << endl;
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    cout << "Stale Mate!!!" << endl;
+    return true;
 }
