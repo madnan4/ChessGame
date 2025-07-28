@@ -4,45 +4,6 @@
 #include <string>
 #include <cmath>
 
-// Implementation for Square
-Square::Square()
-        : color(Color::Unknown), piece(Piece::UnknownPiece), occupied(false) {}
-Square::Square(Color color, Piece piece)
-        : color(color), piece(piece), occupied(true) {}
-string Square::colorToString() {
-    switch (color) {
-        case Color::White: return "|w";
-        case Color::Black: return "|b";
-        default: return "U";
-    }
-}
-
-string Square::pieceToString() {
-    switch (piece) {
-        case Piece::Rook: return colorToString()+"R|";
-        case Piece::Knight: return colorToString()+"N|";
-        case Piece::Bishop: return colorToString()+"B|";
-        case Piece::Queen: return colorToString()+"Q|";
-        case Piece::King: return colorToString()+"K|";
-        case Piece::Pawn: return colorToString()+"P|";
-        default: return "|__|";
-    }
-}
-Color Square::getColor(){
-    return color;
-}
-
-Piece Square::getPiece() {
-    return piece;
-}
-
-bool Square::getOccupied() const {
-    return occupied;
-}
-
-string Square::getName() {
-    return pieceToString();
-}
 Chessboard::Chessboard() {
     currentPlayer = Color::White;
     attackColor = Color::Black;
@@ -53,8 +14,9 @@ Chessboard::Chessboard() {
     enPassantX = -1;
     enPassantY = -1;
     enPassantPossible = false;
-//    print();
 }
+
+//---------------------------------------------------------------------------
 void Chessboard::createBoard() {
     for(auto & i : board) {
         for(auto & j : i) {
@@ -220,7 +182,7 @@ int Chessboard::move(int fromX, int fromY, int toX, int toY)
 
             switch (piece)
             {
-                case Piece::Rook:
+                case Piece::Rook: {
                     if(validRookMove(fromX,fromY,toX,toY))
                     {
                         if (validMakeMove(fromX,fromY,toX,toY)) {
@@ -236,32 +198,32 @@ int Chessboard::move(int fromX, int fromY, int toX, int toY)
                         }else {
                             return -7;
                         }
-                    }else {
-                        cout << "invalid move" << endl;
-                        return -7;
                     }
-                    break;
-                case Piece::Knight:
+                    cout << "invalid move" << endl;
+                    return -7;
+                }
+
+                case Piece::Knight: {
                     if(validKnightMove(fromX,fromY,toX,toY))
                     {
                         if (validMakeMove(fromX,fromY,toX,toY)) {isKingInCheck();return 1;}
-                        else {return -7;}
-                    }else {
-                        cout << "invalid move" << endl;
                         return -7;
                     }
-                    break;
-                case Piece::Bishop:
+                    cout << "invalid move" << endl;
+                    return -7;
+                }
+
+                case Piece::Bishop: {
                     if(validBishopMove(fromX,fromY,toX,toY))
                     {
                         if (validMakeMove(fromX,fromY,toX,toY)) {isKingInCheck();return 1;}
                         return -7;
-                    }else {
-                        cout << "invalid move" << endl;
-                        return -7;
                     }
-                    break;
-                case Piece::King:
+                    cout << "invalid move" << endl;
+                    return -7;
+                }
+
+                case Piece::King: {
                     if(validKingMove(fromX,fromY,toX,toY)) {
                         if (validMakeMove(fromX,fromY,toX,toY)){
                             inCheck = false;
@@ -270,37 +232,43 @@ int Chessboard::move(int fromX, int fromY, int toX, int toY)
                             }if (currentPlayer == Color::Black) {
                                 kingHasMoved[1] = true;
                             }
+                            // updateKing(toX,toY);
                             isKingInCheck();
                             return 1;
-                        }else{return -7;}
-                    }else {
-                        cout << "invalid move" << endl;
+                        }
                         return -7;
                     }
-                    break;
-                case Piece::Queen:
+                    cout << "invalid move" << endl;
+                    return -7;
+                }
+
+                case Piece::Queen: {
                     if(validQueenMove(fromX,fromY,toX,toY))
                     {
-                        if (validMakeMove(fromX,fromY,toX,toY)) {return 1;}
-                        else {return -7;}
-                    }else {
-                        cout << "invalid move" << endl;
+                        if (validMakeMove(fromX,fromY,toX,toY)) {
+                            isKingInCheck();
+                            return 1;
+                        }
                         return -7;
                     }
-                    break;
-                case Piece::Pawn:
+                    cout << "invalid move" << endl;
+                    return -7;
+                }
+
+                case Piece::Pawn: {
                     if(validPawnMove(fromX,fromY,toX,toY))
                     {
                         if (validMakeMove(fromX,fromY,toX,toY)) {
                             checkPawnPromotion(toX,toY);
                             isKingInCheck();
                             return 1;
-                        }else{return -7;}
-                    }else {
-                        cout << "invalid move" << endl;
+                        }
                         return -7;
                     }
-                    break;
+                    cout << "invalid move" << endl;
+                    return -7;
+                }
+
                 case Piece::UnknownPiece:
                     break;
             }
@@ -313,6 +281,7 @@ int Chessboard::move(int fromX, int fromY, int toX, int toY)
         }
     }
 }
+
 void Chessboard::changePlayer() {
     if (currentPlayer == Color::White) {
         currentPlayer = Color::Black;
@@ -320,6 +289,7 @@ void Chessboard::changePlayer() {
     }
     else{currentPlayer = Color::White; attackColor = Color::Black;}
 }
+
 bool Chessboard::validMakeMove(int fromX, int fromY, int toX, int toY)
 {
     if (board[fromY][fromX].getPiece() == Piece::King) {updateKing(toX,toY);}
@@ -407,7 +377,6 @@ bool Chessboard::validKingMove(int fromX, int fromY, int toX, int toY) {
         return false;
     }
     if (std::abs(fromX - toX) == 2 && fromY == toY && !inCheck) { // Castling
-        int rookX = (toX > fromX) ? 7 : 0;
         int rookIndex = (toX > fromX) ? 1 : 0;
 
         // Check if king or rook has moved
@@ -454,7 +423,7 @@ bool Chessboard::validBishopMove(int fromX, int fromY, int toX, int toY)
 
 
 
-bool Chessboard::validRookMove(int fromX, int fromY, int toX, int toY) {
+bool Chessboard::validRookMove(int fromX, int fromY, int toX, int toY) const {
     if (fromX == toX && fromY == toY) {
         return false; // No movement
     }
@@ -496,8 +465,8 @@ bool Chessboard::isSquareUnderAttack(int x, int y) {
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             if (board[j][i].getOccupied() && board[j][i].getColor() == attackColor) {
-                Piece piece = board[j][i].getPiece();
-                switch (piece) {
+
+                switch (board[j][i].getPiece()) {
                     case Piece::Rook:
                         if (validRookMove(i, j, x, y)) return true;
                     break;
@@ -648,7 +617,6 @@ bool Chessboard::isCheckmate() {
                             // If the king is no longer in check, it's not checkmate
                             if (!stillInCheck)
                                 {
-                                // cout <<"checking every position "<< toY << ", " << toX << ", " << piece << std::endl;
                                 return false;
                             }
                         }
@@ -665,8 +633,7 @@ bool Chessboard::isCheckmate() {
 
 
 bool Chessboard::isValidMove(int fromX, int fromY, int toX, int toY) {
-    Piece piece = board[fromY][fromX].getPiece();
-    switch (piece) {
+    switch (board[fromY][fromX].getPiece()) {
         case Piece::Rook: return validRookMove(fromX, fromY, toX, toY);
         case Piece::Knight: return validKnightMove(fromX, fromY, toX, toY);
         case Piece::Bishop: return validBishopMove(fromX, fromY, toX, toY);

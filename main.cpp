@@ -68,8 +68,8 @@ void play_game()
     {
         chessboard.getPlayer();
         string command = "";
-//        cout << "Please enter the piece location and the intended location."
-//        << "\nfor example white pawn is at a, 2 to move it to a,4 please enter a,2,a,4" << endl;
+        cout << "Please enter the piece location and the intended location."
+        << "\nfor example white pawn is at a, 2 to move it to a,4 please enter a,2,a,4" << endl;
         cin >> command;
         stringstream ss(command);
         string token;

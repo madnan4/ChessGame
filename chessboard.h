@@ -5,47 +5,19 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include <vector>
-#include <cmath>
+#include "square.h"
 
 using namespace std;
 
-enum Color {
-    White, Black, Unknown
-};
 
-enum Piece
-{
-    Rook, Knight, Bishop, King, Queen, Pawn , UnknownPiece
-};
-
-class Square;
 class chessboard;
-
-class Square {
-private:
-    Color color;
-    Piece piece;
-    bool occupied;
-
-    string colorToString();
-    string pieceToString();
-
-public:
-    Square(Color color, Piece piece);
-    Square();
-    Color getColor();
-    Piece getPiece();
-    bool getOccupied() const;
-    string getName();
-};
 class ChessboardIterator;
 class Chessboard {
 private:
     Square board[8][8];
-    bool kingHasMoved[2];
-    bool rookHasMoved[2][2];
-    bool validRookMove(int fromX, int fromY, int toX, int toY);
+    bool kingHasMoved[2]{};
+    bool rookHasMoved[2][2]{};
+    bool validRookMove(int fromX, int fromY, int toX, int toY) const;
     bool validPawnMove(int fromX, int fromY, int toX, int toY);
     bool validKingMove(int fromX, int fromY, int toX, int toY);
     bool validBishopMove(int fromX, int fromY, int toX, int toY);
@@ -64,16 +36,17 @@ private:
 public:
     friend class ChessboardIterator;
     bool check_mate = false;
-    int enPassantX = -1;
-    int enPassantY = -1;
+    int enPassantX;
+    int enPassantY;
     bool promotePawn = false;
-    int whiteKingX = 4, whiteKingY = 0;
-    int blackKingX = 4, blackKingY = 7;
+    int whiteKingX{}, whiteKingY{};
+    int blackKingX{}, blackKingY{};
     bool enPassantPossible;
     bool checkMate{};
     bool inCheck = false;
     Color currentPlayer;
     Color attackColor;
+
     Chessboard();
     bool isCheckmate();
     bool isStaleMate();
@@ -84,6 +57,7 @@ public:
     int move(int fromX, int fromY, int toX, int toY);
     void promotePawnFunc(int toX, int toY, string input);
     void getPlayer() const{if (currentPlayer == White){cout << "It is White piece's turn"<< endl;} else{cout << "It is Black piece's turn"<< endl;}};
+
     ChessboardIterator begin();
     ChessboardIterator end();
 };
@@ -114,7 +88,7 @@ public:
             ++position;
         }
 
-//        position++;
+        //        position++;
         return *this;
     }
     int operator!=(ChessboardIterator &a)

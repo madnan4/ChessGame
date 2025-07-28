@@ -63,6 +63,13 @@ build CMakeFiles/ChessGame.dir/chessboard.cpp.o: CXX_COMPILER__ChessGame_unscann
   OBJECT_DIR = CMakeFiles/ChessGame.dir
   OBJECT_FILE_DIR = CMakeFiles/ChessGame.dir
 
+build CMakeFiles/ChessGame.dir/square.cpp.o: CXX_COMPILER__ChessGame_unscanned_Debug /Users/adnan/CLionProjects/ChessGame/square.cpp || cmake_object_order_depends_target_ChessGame
+  DEP_FILE = CMakeFiles/ChessGame.dir/square.cpp.o.d
+  FLAGS = -g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk -fcolor-diagnostics
+  INCLUDES = -isystem /opt/homebrew/include
+  OBJECT_DIR = CMakeFiles/ChessGame.dir
+  OBJECT_FILE_DIR = CMakeFiles/ChessGame.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target ChessGame
@@ -71,7 +78,7 @@ build CMakeFiles/ChessGame.dir/chessboard.cpp.o: CXX_COMPILER__ChessGame_unscann
 #############################################
 # Link the executable ChessGame
 
-build ChessGame: CXX_EXECUTABLE_LINKER__ChessGame_Debug CMakeFiles/ChessGame.dir/main.cpp.o CMakeFiles/ChessGame.dir/chessboard.cpp.o | /opt/homebrew/lib/libgtest_main.a /opt/homebrew/lib/libgtest.a
+build ChessGame: CXX_EXECUTABLE_LINKER__ChessGame_Debug CMakeFiles/ChessGame.dir/main.cpp.o CMakeFiles/ChessGame.dir/chessboard.cpp.o CMakeFiles/ChessGame.dir/square.cpp.o | /opt/homebrew/lib/libgtest_main.a /opt/homebrew/lib/libgtest.a
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk
   LINK_LIBRARIES = /opt/homebrew/lib/libgtest_main.a  /opt/homebrew/lib/libgtest.a
   OBJECT_DIR = CMakeFiles/ChessGame.dir

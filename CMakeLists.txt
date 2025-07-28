@@ -4,7 +4,10 @@ project(ChessGame)
 set(CMAKE_CXX_STANDARD 20)
 
 # Add the main executable
-add_executable(ChessGame main.cpp chessboard.cpp)
+add_executable(ChessGame main.cpp chessboard.cpp
+        square.h
+        square.cpp
+)
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
